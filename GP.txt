@@ -1,0 +1,21 @@
+
+
+
+
+e7na kda 3andena fusion 360 hane3mel bih el 2d to 3d conversion felakher ba3d mankhalas
+
+
+
+AI model
+
+Dataset
+
+train and test the model
+
+save the model
+
+user can enter image
+
+image sent to backend run on the model
+
+image output is run through fusion 360 to be turned 3d and return back to the user

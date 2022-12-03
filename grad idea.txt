@@ -1,0 +1,51 @@
+Applications: inspection, navigation, object identification, visualisation and animation.
+cultural heritage digital archiving. The motivations are different: documentation in case of loss or damage, 
+virtual tourism and museum, education resources, interaction without risk of damage, and so forth. 
+The requirements specified for many applications, including digital archiving and mapping
+
+
+
+Paper 1: Image-based 3D Modelling: A Review, 2006, General Review of image-based 3D modelling
+
+
+Paper 2: 3D Model Acquisition from Extended Image Sequences, 2005
+
+Approach: 3-image matching scheme and six and seven point robust schemes
+
+
+
+Paper 3: 3D Pose Estimation and 3D Model Retrieval for Objects in the Wild, 2018
+
+Approach: CNN to predict the 2D projections of the object’s 3D bounding box corners (red dots). From these, we recover the object
+pose using a PnP algorithm. Second row: We render depth images from 3D models under the estimated pose and extract
+image descriptors from the real RGB image and the synthetic depth images using two different CNNs. Finally, we match the
+computed descriptors to retrieve the closest 3D model. Our approach supports pre-computed synthetic descriptors.
+
+model used: CNN to predict the boundaries and PnP to construct the boundaries
+
+Accuracies: 
+VGG: 0.8076
+VGG+blur: 0.8033
+ResNet: 0.8341
+ResNet+blur: 0.8392
+
+
+Paper 4: E. Marchand, P. Bouthemy, F. Chaumette and V. Moreau, "Robust real-time visual tracking using a 2D-3D model-based approach," Proceedings of the Seventh IEEE International Conference on Computer Vision, 1999, pp. 262-268 vol.1, doi: 10.1109/ICCV.1999.791229.
+
+Approach: Model-based tracking
+
+Accuracy:  We obtain an accuracy of
+less that 0.7 mm in translation and 0.17 in rotation,
+while the object is located at 40 cm from the camera. The
+mean error is less than 0.2 pixels with a standard
+deviation of 0.3 pixels.
+
+
+Paper 5: Image-based 3D reconstruction using traditional and UAV datasets for
+analysis of road pavement distress
+
+Approach: Structure from Motion (SfM) is an innovative photogrammetry technique which allows any user 
+to create 3D models from a photo data set; its current application in the road pavement domain is 
+limited, as it is mostly used for architectural and archeological studies
+
+SFM was the approach used and no machine learning was involved to reconstruct the images into 3d-models

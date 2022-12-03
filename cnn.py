@@ -61,16 +61,21 @@ print(after_train.shape)
 # results = model.evaluate(before_test,after_test,batch_size=128)
 # print("test loss, test acc:", results)
 
-
+#load model from saved file
 model = tf.keras.models.load_model('NoseDetection.h5')
 prd = model.predict(before_test)
-plot = plt.imshow(prd[0], interpolation='nearest')
+f = plt.figure()
+f.add_subplot(2,2,1)
+plt.imshow(prd[0], interpolation='nearest')
+plt.title("Prediction")
+f.add_subplot(2,2,2)
+plt.imshow(before_test[0], interpolation='nearest')
+plt.title("Before surgery")
+f.add_subplot(2,2,3)
+plt.imshow(after_test[0], interpolation='nearest')
+plt.title("after surgery")
 plt.show()
 
-with open('my_array.csv', 'w') as my_file:
-        for i in before_test[0]:
-            np.savetxt(my_file,i)
-print('Array exported to file')
 
 
 

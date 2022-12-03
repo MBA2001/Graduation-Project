@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 
 # tool for enhancing the image's quality
 # https://learnopencv.com/super-resolution-in-opencv/
-sr = cv2.dnn_superres.DnnSuperResImpl_create()
+# sr = cv2.dnn_superres.DnnSuperResImpl_create()
  
-path = "./utils/EDSR_x4.pb"
+# path = "./utils/EDSR_x4.pb"
  
-sr.readModel(path)
+# sr.readModel(path)
  
-sr.setModel("edsr",4)
+# sr.setModel("edsr",4)
 
 
 # this tool is used for node detection
@@ -47,7 +47,7 @@ for i in range(174):
   gray = cv2.cvtColor(before[i], cv2.COLOR_BGR2GRAY)
   nose_rects = nose_cascade.detectMultiScale(gray,1.3,20)
   for (x,y,w,h) in nose_rects:
-    cv2.rectangle(before[i], (x,y), (x+w,y+h), (0,255,0), 3)
+    # cv2.rectangle(before[i], (x,y), (x+w,y+h), (0,255,0), 3)
     break
 
   # crop the rectangle as the nose is the only feature we want in the photos
@@ -58,20 +58,20 @@ for i in range(174):
   img = cv2.detailEnhance(crop_img2, sigma_s=10, sigma_r=0.15)
   img = cv2.edgePreservingFilter(img, flags=1, sigma_s=64, sigma_r=0.2)
   # run the enhanced image through the image enhancing tool for better resolution
-  result  = sr.upsample(img)
+  # result  = sr.upsample(img)
   #saving the image to the files
-  cv2.imwrite('./HDA-PlasticSurgery/Nose_only_test/before/'+str(i+1)+'.jpg',result)
+  cv2.imwrite('./HDA-PlasticSurgery/NOT/before/'+str(i+1)+'.jpg',img)
   
   # same as the one above it but for the After photos
   gray = cv2.cvtColor(after[i], cv2.COLOR_BGR2GRAY)
   nose_rects = nose_cascade.detectMultiScale(gray,1.3,20)
   for (x,y,w,h) in nose_rects:
-    cv2.rectangle(after[i], (x,y), (x+w,y+h), (0,255,0), 3)
+    # cv2.rectangle(after[i], (x,y), (x+w,y+h), (0,255,0), 3)
     break
   crop_img = after[i][y:y+h, x:x+w]
   crop_img2 = cv2.resize(crop_img,dsize=(100,100))
   img = cv2.detailEnhance(crop_img2, sigma_s=10, sigma_r=0.15)
   img = cv2.edgePreservingFilter(img, flags=1, sigma_s=64, sigma_r=0.2)
-  result  = sr.upsample(img)
-  cv2.imwrite('./HDA-PlasticSurgery/Nose_only_test/after/'+str(i+1)+'.jpg',result)
+  # result  = sr.upsample(img)
+  cv2.imwrite('./HDA-PlasticSurgery/NOT/after/'+str(i+1)+'.jpg',img)
   
