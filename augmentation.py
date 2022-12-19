@@ -78,13 +78,13 @@ for i in range(174):
 
 
 
-gray = cv2.cvtColor(after[38], cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(after[90], cv2.COLOR_BGR2GRAY)
 nose_rects = nose_cascade.detectMultiScale(gray,1.3,20)
 for (x,y,w,h) in nose_rects:
   # cv2.rectangle(before[i], (x,y), (x+w,y+h), (0,255,0), 3)
   break
 
-crop_img = after[38][y:y+h, x:x+w]
+crop_img = after[90][y:y+h, x:x+w]
 # crop_img2 = cv2.resize(crop_img,dsize=(100,100))
 img = cv2.detailEnhance(crop_img, sigma_s=10, sigma_r=0.15)
 img = cv2.edgePreservingFilter(img, flags=1, sigma_s=64, sigma_r=0.2)
@@ -97,8 +97,8 @@ img_BGRA = cv2.merge((b_channel, g_channel, r_channel, alpha_channel))
 
 x_offset = x
 y_offset = y
-background = before[38]
+background = before[90]
 combined = add_transparent_image(background, img_BGRA,x_offset,y_offset)
 
-cv2.imwrite('combined38.png',background)
+cv2.imwrite('combined90.png',background)
 
