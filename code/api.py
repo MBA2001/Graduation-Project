@@ -9,8 +9,7 @@ api = Api(app)
 predict_parser = reqparse.RequestParser()
 predict_parser.add_argument("name",type=str,required=True)
 predict_parser.add_argument("url",type=str,required=True)
-predict_parser.add_argument("model_number",type=int,required=True)
-
+predict_parser.add_argument("doctor",type=str,required=True)
 
 class HelloWorld(Resource):
     def get(self):
@@ -18,14 +17,15 @@ class HelloWorld(Resource):
 
 class Predict(Resource):
   def get(self):
-     return {'data':'post request with name,url,model_number please'}
+     return {'data':'post request with name,url please'}
   def post(self):
     args = predict_parser.parse_args()
-    if args['name'] == '' or args['url'] == '':  
+    if args['name'] == '' or args['url'] == '' or args['doctor'] == '':  
       abort(400,"Name and url must be provided")
     else:
-       result = predict(args['name'],args['url'],args['model_number'])
-       return args
+       predict(args['name'],args['url'])
+       augment(args['url'],args['name'],args['doctor'])
+       return {'data':"true"}
 
 
 
@@ -38,10 +38,10 @@ class FaceDetection(Resource):
         abort(400,"url must be provided")
       else:
         result = detect_face(args['url'])
-        if result == 1:
-           return {'data':'true'}
-        else:
+        if result == 0:
            return {'data':'false'}
+        else:
+           return {'data':'true'}
         
 
 
