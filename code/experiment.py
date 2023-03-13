@@ -10,6 +10,9 @@ from firebase_admin import credentials
 from firebase_admin import storage as S
 from google.cloud import storage
 from google.oauth2 import service_account
+from mtcnn import MTCNN
+import os
+import shutil
 
 cred = credentials.Certificate("./cert.json")
 firebase_admin.initialize_app(cred,{'storageBucket': 'grad-ceed6.appspot.com'})
@@ -165,3 +168,39 @@ def detect_face(imagePath):
   return len(faces)
    
    
+def add_detections(img,name,doctor):
+  image = io.imread(img)
+  image = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+  parent_dir = "C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/"
+  parent_dir2 = "C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/"+doctor+'/'
+
+  path = os.path.join(parent_dir, doctor)
+  mode = 0o666
+  if not os.path.exists(parent_dir2):
+    os.mkdir(path, mode)
+
+  path = os.path.join(parent_dir2, name+'_'+doctor+'_results')
+  if not os.path.exists(parent_dir2+'/'+name+'_'+doctor+'_results'):
+    os.mkdir(path,mode)
+  
+  cv2.imwrite('C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/'+doctor+'/'+name+'_'+doctor+'.png',image)
+  detector = MTCNN()
+  detections = detector.detect_faces(image)[0]['keypoints']
+  f = open("C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/"+doctor+"/"+name+"_"+doctor+".txt", "a")
+  f.write(str(detections['left_eye'][0])+' '+str(detections['left_eye'][1])+'\n')
+  f.write(str(detections['right_eye'][0])+' '+str(detections['right_eye'][1])+'\n')
+  f.write(str(detections['nose'][0])+' '+str(detections['nose'][1])+'\n')
+  f.write(str(detections['mouth_left'][0])+' '+str(detections['mouth_left'][1])+'\n')
+  f.write(str(detections['mouth_right'][0])+' '+str(detections['mouth_right'][1])+'\n')
+
+  f.close()
+
+
+def threeD(doctor,name):
+  os.system('python C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/test.py --name=faceAlignment --epoch=20 --img_folder=C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/'+doctor+'/')
+  # os.system('C:/Users/baher/OneDrive/Desktop/GP/code/convertor.py -i C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/'+doctor+'/'+name+'_'+doctor+'.obj'+' -o C:/Users/baher/OneDrive/Desktop/gradproject/assets/'+name+'_'+doctor+'.glb')
+  shutil.copy('C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/'+doctor+'/'+name+'_'+doctor+'.obj','C:/Users/baher/OneDrive/Desktop/gradproject/assets/'+name+'_'+doctor+'.obj')
+  shutil.copy('C:/Users/baher/OneDrive/Desktop/Deep3DFaceRecon_pytorch/baher_test/'+doctor+'/'+name+'_'+doctor+'.mat','C:/Users/baher/OneDrive/Desktop/gradproject/assets/'+name+'_'+doctor+'.mat')
+  
+
+

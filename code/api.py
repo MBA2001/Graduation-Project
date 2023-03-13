@@ -25,6 +25,8 @@ class Predict(Resource):
     else:
        predict(args['name'],args['url'])
        augment(args['url'],args['name'],args['doctor'])
+       add_detections(args['url'],args['name'],args['doctor'])
+       threeD(args['doctor'],args['name'])
        return {'data':"true"}
 
 
